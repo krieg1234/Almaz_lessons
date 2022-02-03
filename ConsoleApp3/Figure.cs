@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp3
+namespace Almaz_lessons_app
 {
     abstract  class Figure
     {
         public static string[] colors = { "красный", "зелёный", "синий" };
         public abstract string type { get; }
         public string color { get; set; }
-
+        
         public Figure(string _color)
         {
             if (Array.IndexOf(colors, _color) == -1)
@@ -21,10 +21,13 @@ namespace ConsoleApp3
         }
 
         public Figure() { }
-
+        public override string ToString()
+        {
+           return $"Type: {type}, color: {color}";
+        }
         public void PrintInfo()
         {
-            Console.WriteLine($"Type: {type}, color: {color}");
+            Console.WriteLine(this.ToString());
         } 
         
         public static Figure[] CreateFigureArr(int size)
@@ -34,23 +37,33 @@ namespace ConsoleApp3
             {
                 figures[i] = CreateRandomFigure();
             }
+
+            Logger logger = new Logger();
+            logger.WriteLog(figures, "Сгенерированы фигуры:");
+
             return figures;
         }
 
+        delegate Figure CreateFigure();
         public static Figure CreateRandomFigure()
         {
             Random rnd = new Random();
-            
-            Figure[] types = {
-                new Squere(), 
-                new Rectangle() , 
-                new Triangle() ,
-                new Circle() , 
-                new Cube() , 
-                new Ball() 
+
+            CreateFigure[] creators = {
+                ()=>new Squere(),
+                ()=>new Rectangle() ,
+                ()=>new Triangle() ,
+                ()=>new Circle() ,
+                ()=>new Cube() ,
+                ()=>new Ball() 
             };
 
-            return (Figure)types[rnd.Next(types.Length)];           
+            int index = rnd.Next(creators.Length);
+
+            CreateFigure createFigure = creators[index];
+            Figure figure = createFigure();            
+
+            return figure;           
         }       
     }   
 
@@ -58,7 +71,7 @@ namespace ConsoleApp3
     {
         double GetSquare();
         double GetPerimeter();
-
+        
         static Figure[] FindMaxSquareFigures(Figure[] figures)
         {
             double maxSquare = 0;
@@ -75,6 +88,7 @@ namespace ConsoleApp3
                         maxSquare = currentSquare;
                         result = new Figure[] { f };
                     }
+
                     if (currentSquare == maxSquare)
                     {
                         Figure[] newResult = new Figure[result.Length + 1];
@@ -88,6 +102,8 @@ namespace ConsoleApp3
                 }              
                              
             }
+            Logger logger = new Logger();
+            logger.WriteLog(result, "Фигуры с большей площадью:");
             return result;
         }
     }

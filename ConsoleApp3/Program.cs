@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp3
+﻿namespace Almaz_lessons_app
 {
     public class Program
     {
