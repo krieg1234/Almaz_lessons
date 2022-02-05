@@ -50,6 +50,7 @@ namespace Almaz_lessons_app
 
                 Console.WriteLine();
             }
+            Console.WriteLine("\n");
         }
 
         public static Matrix operator +(Matrix matrixA, Matrix matrixB)
@@ -135,15 +136,15 @@ namespace Almaz_lessons_app
             return true;
         }
 
-        static public Matrix Trasponire (Matrix matrix)
+        public Matrix Trasponire ()
         {
-            var result = new int[matrix.RowsCount(), matrix.ColumnsCount()];
+            var result = new int[this.RowsCount(), this.ColumnsCount()];
 
-            for (var i = 0; i < matrix.RowsCount(); i++)
+            for (var i = 0; i < this.RowsCount(); i++)
             {
-                for (var j = 0; j < matrix.ColumnsCount(); j++)
+                for (var j = 0; j < this.ColumnsCount(); j++)
                 {
-                    result[i, j] = matrix.data[j,i] ;
+                    result[i, j] = this.data[j,i] ;
                 }
             }
 
