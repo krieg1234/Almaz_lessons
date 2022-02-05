@@ -74,6 +74,7 @@ namespace Almaz_lessons_app
         public void PrintInfo()
         {
             string result = $"{this.numerator}/{this.denominator}";
+            if (denominator == 1) result = $"{numerator}";
             Console.WriteLine(result);
         }
     }
